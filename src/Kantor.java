@@ -1,37 +1,34 @@
+import java.util.Arrays;
+import java.util.List;
+
 public class Kantor {
 
     Konto kontoZakladajace;
 
-    String[] waluty = {"USD","RUB","EUR"};
+    List<String> waluty = Arrays.asList("USD","RUB","EUR");
     float[] wartosciWalut = {3.42F,1.45F,4.17F};
-    float[] stanKontaKantorowego = new float[waluty.length];
+    float[] stanKontaKantorowego = new float[waluty.size()];
 
-    void operacjaZmianyWaluty(float kwota,String walutaWejsciowa,String walutaWyjsciowa){
-        switch(walutaWyjsciowa){
-            case "USD":
-                if(walutaWyjsciowa.equals(walutaWejsciowa)){
-                    System.out.println("NIE MOZNA WYMIENIC USD NA USD :) ");
+    // Trzeba zrobic jakies przeliczniki normalne dla tych walut !!!!
+
+    void operacjaZmianyWaluty(float[] konto,String walutaWejsciowa,String walutaWyjsciowa,float kwota){
+
+        for(String waluta: waluty){
+            if(walutaWejsciowa.equals(waluta)){
+                if(walutaWyjsciowa.equals(waluta)){
+                    System.out.println("Nie mozna wymienic :" + walutaWejsciowa + " na " + walutaWejsciowa);
                 }else{
-                    stanKontaKantorowego[0] = stanKontaKantorowego[0] + kwota*wartosciWalut[0];
+                    System.out.println(waluty.indexOf(walutaWejsciowa)+" | "+waluty.indexOf(walutaWyjsciowa));
+                    stanKontaKantorowego[waluty.indexOf(walutaWejsciowa)] -= kwota;
+                    stanKontaKantorowego[waluty.indexOf(walutaWyjsciowa)] += kwota*wartosciWalut[waluty.indexOf(walutaWyjsciowa)];
+
+                    System.out.println("Kantor waluta: "+ waluta + " i stan waluty:" + stanKontaKantorowego[waluty.indexOf(walutaWejsciowa)]);
+                    System.out.println("Stan " + walutaWyjsciowa + " na ktora wmieniono : " + stanKontaKantorowego[waluty.indexOf(walutaWyjsciowa)]);
                 }
 
-                break;
-            case "RUB":
-                if(walutaWyjsciowa.equals(walutaWejsciowa)){
-                    System.out.println("NIE MOZNA WYMIENIC RUB NA RUB :) ");
-                }else{
-                    stanKontaKantorowego[1] = stanKontaKantorowego[1] + kwota*wartosciWalut[1];
-                }
-
-                break;
-            case "EUR":
-                if(walutaWyjsciowa.equals(walutaWejsciowa)){
-                    System.out.println("NIE MOZNA WYMIENIC EUR NA EUR :) ");
-                }else{
-                    stanKontaKantorowego[2] = stanKontaKantorowego[2] + kwota*wartosciWalut[2];
-                }
-
-                break;
+            }else{
+                //System.out.println("Brak takiej waluty");
+            }
         }
     }
 

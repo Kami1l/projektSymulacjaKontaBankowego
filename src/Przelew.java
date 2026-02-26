@@ -10,6 +10,7 @@ public class Przelew {
         kontoOdbierajace.stanKonta = kontoOdbierajace.stanKonta + kwota;
         System.out.println("Bilans po operacji:" + kontoWysylajace.stanKonta);
         System.out.println("Bilans po operacji odbiorcy:" + kontoOdbierajace.stanKonta);
+        kontoWysylajace.dodajLog(new Log(1,1,999,"Przelew","OK"));
     }
 
     public Przelew(Konto kontoWysylajace,Konto kontoOdbierajace,float kwota){
