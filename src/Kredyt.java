@@ -10,6 +10,7 @@ public class Kredyt {
     float odsetki;
 
     //odsetki = kapitał * oprocentowanie * czas
+
     public void naliczenieOdsetek(){
         odsetki = wartoscKredytu * oprocentowanie * okresSplaty;
         wartoscDoSplaty += odsetki;

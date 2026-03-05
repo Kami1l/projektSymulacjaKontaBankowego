@@ -12,6 +12,7 @@ public class Blik {
         kodBlik = 100000 + random.nextInt(900000);
         System.out.println("Wygenerowano kod blik :"+kodBlik);
         return kodBlik;
+
     }
 
     public void przelewBlik(int podanyKodBlik){

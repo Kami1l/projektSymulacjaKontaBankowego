@@ -28,6 +28,7 @@ public class Kantor {
 
             }else{
                 //System.out.println("Brak takiej waluty");
+
             }
         }
     }

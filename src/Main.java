@@ -12,6 +12,10 @@
 public class Main {
     public static void main(String[] args){
 
+        Konto jeden = new Konto("1","111",100);
+        Konto dwa = new Konto("2","222",100);
+        Konto trzy = new Konto("3","333",100);
+        
         Konto pawlak = new Konto("Kamil","123",500);
         Konto juzek = new Konto("juzek","345",500);
 
@@ -22,8 +26,16 @@ public class Main {
 //        pawlak.wyplacPieniadze(100);
 //        pawlak.stanKonta();
         System.out.println("NOWE PRZELEW --------------------");
+
         Przelew nowyPrzelew = new Przelew(pawlak,juzek,200);
         nowyPrzelew.wyslaniePrzelewu();
+        Przelew nowy2Przelew = new Przelew(juzek,pawlak,200);
+        nowy2Przelew.wyslaniePrzelewu();
+
+        for(Log log: juzek.wezLogi()){
+            System.out.println(log);
+        }
+
         for(Log log: pawlak.wezLogi()){
             System.out.println(log);
         }

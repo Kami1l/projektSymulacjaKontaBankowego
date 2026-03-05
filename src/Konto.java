@@ -7,6 +7,7 @@ public class Konto {
     String hasloUzytkownika;
     int blik;
     float stanKonta;
+    int id;
 
     List<Log> zbiorLogow = new ArrayList<>(); // Lista stworzonych logow DYNAMICZNA
 
@@ -29,6 +30,7 @@ public class Konto {
     public void wplacPieniadze(int wplata){
         stanKonta += wplata;
         System.out.println("Wplacono : " + wplata + " Aktualny stan konta :"+ stanKonta);
+
     }
 
     public Kredyt wezKredyt(float  wartoscKredytu, float okresSplaty,float oprocentowanie) {
@@ -53,5 +55,6 @@ public class Konto {
         this.hasloUzytkownika = hasloUzytkownika;
         this.nazwaUzytkownika = nazwaUzytkownika;
         this.stanKonta = stanKonta;
+        this.id = idGen.next();
     }
 }
