@@ -1,38 +1,49 @@
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Kantor {
 
     Konto kontoZakladajace;
+    int idOperacji = 2;
 
-    List<String> waluty = Arrays.asList("USD","RUB","EUR");
-    float[] wartosciWalut = {3.42F,1.45F,4.17F};
+    List<String> waluty = Arrays.asList("USD","RUB","EUR","PLN");
+    float[] wartosciWalut = {3.42F,1.45F,4.17F,1.00F};
     float[] stanKontaKantorowego = new float[waluty.size()];
+
 
     // Trzeba zrobic jakies przeliczniki normalne dla tych walut !!!!
 
-    void operacjaZmianyWaluty(float[] konto,String walutaWejsciowa,String walutaWyjsciowa,float kwota){
+    void operacjaZmianyWaluty(Konto konto, String walutaWejsciowa, String walutaWyjsciowa, float kwota){
+        Awarie awaria = new Awarie(idOperacji);
 
-        for(String waluta: waluty){
-            if(walutaWejsciowa.equals(waluta)){
-                if(walutaWyjsciowa.equals(waluta)){
-                    System.out.println("Nie mozna wymienic :" + walutaWejsciowa + " na " + walutaWejsciowa);
-                }else{
-                    System.out.println(waluty.indexOf(walutaWejsciowa)+" | "+waluty.indexOf(walutaWyjsciowa));
-                    stanKontaKantorowego[waluty.indexOf(walutaWejsciowa)] -= kwota;
-                    stanKontaKantorowego[waluty.indexOf(walutaWyjsciowa)] += kwota*wartosciWalut[waluty.indexOf(walutaWyjsciowa)];
+        int indexWej = waluty.indexOf(walutaWejsciowa);
+        int indexWyj = waluty.indexOf(walutaWyjsciowa);
 
-                    System.out.println("Kantor waluta: "+ waluta + " i stan waluty:" + stanKontaKantorowego[waluty.indexOf(walutaWejsciowa)]);
-                    System.out.println("Stan " + walutaWyjsciowa + " na ktora wmieniono : " + stanKontaKantorowego[waluty.indexOf(walutaWyjsciowa)]);
-                }
-
+        if(awaria.wystapienieAwarii(idOperacji)){
+            kontoZakladajace.dodajLog(new Log(kontoZakladajace.id,kwota,idOperacji,"FAILED",idOperacji));
+        }else {
+            if(!waluty.contains(walutaWejsciowa)){
+                kontoZakladajace.dodajLog(new Log(kontoZakladajace.id,kwota,idOperacji,"FAILED: BRAK TAKIEJ WALUTY",idOperacji));
             }else{
-                //System.out.println("Brak takiej waluty");
+                if(walutaWyjsciowa.equals(walutaWejsciowa)){
+                    kontoZakladajace.dodajLog(new Log(kontoZakladajace.id,kwota,idOperacji,"FAILED: WYMIANA WALUTY NA TA SAMA",idOperacji));
+                }else{
+                        System.out.println(indexWej+" | "+indexWyj);
+                        stanKontaKantorowego[indexWej] -= kwota;
+                        stanKontaKantorowego[indexWyj] += kwota*wartosciWalut[indexWyj];
+
+                        System.out.println("Kantor waluta: "+ walutaWejsciowa + " i stan waluty:" + stanKontaKantorowego[indexWej]);
+                        System.out.println("Stan " + walutaWyjsciowa + " na ktora wmieniono : " + stanKontaKantorowego[indexWyj]);
+
+                        kontoZakladajace.dodajLog(new Log(kontoZakladajace.id,kwota,idOperacji,"OK",idOperacji));
+                }
             }
+
         }
     }
 
     public Kantor(Konto kontoZakladajace){
         this.kontoZakladajace = kontoZakladajace;
     }
+
+
 }
